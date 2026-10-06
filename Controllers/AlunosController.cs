@@ -20,5 +20,33 @@ public IActionResult Get()
     return Ok(_alunos.Values);
 }
 
+[HttpGet("{id}")]
 
+public IActionResult GetByld(int id)
+    {
+        if (!_alunos.ContainsKey(id))
+        {
+            return NotFound("Aluno não encontrado: ");
+        }
+        return Ok(_alunos[id]);
+    }
+    [HttpPost]
+    public IActionResult Post([FromBody] Aluno novoAluno)
+    {
+        novoAluno.Id = _alunos.Count +1;
+        _alunos.Add(novoAluno.Id, novoAluno);
+
+        return Ok(novoAluno);
+    }
+    [HttpDelete]
+    
+    public IActionResult Delete(int id)
+    {
+        if (!_alunos.ContainsKey(id))
+        {
+            return NotFound("Aluno não encontrado: ");
+        }
+        _alunos.Remove(id);
+        return Ok();
+    }
 }
